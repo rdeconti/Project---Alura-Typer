@@ -1,0 +1,228 @@
+<!--
+****************************************************************************
+  Projeto Labora/Alura/Oracle ONE
+  Curso Alura: HTML5, CSS3 e JQUERY
+  Aluna: Rosemeire Deconti
+  Exercício: Página WEB com jogo Alura Typer
+  Data: Novembro/2020
+****************************************************************************
+-->
+
+<!-- Informar ao navegador a versão do HTML utilizada pela página -->
+<!DOCTYPE html>
+
+<!-- Informar ao navegador o início da codificação HTML -->
+<!-- Informar ao navegador o idioma da página (permite tradução da página) -->
+<html lang="pt-br" dir="ltr">
+
+  <head>
+		  <!-- Conjunto de regras representação dos caracteres (exemplo: acentuação) -->
+      <meta charset="UTF-8">
+      <!-- Controlar layout em navegadores de dispositivos móveis -->
+      <meta name="viewport" content="width=device-width" initial-scale=1.0">
+		  <!-- Título do site (utilizado na aba do navegador) -->
+      <title>Alura Typer - Jogo</title>
+      <!-- front-end framework based on material design -->
+      <link rel="stylesheet" href="css/libs/materialize.min.css">
+      <!-- fonts: typography -->
+      <link rel="stylesheet" href="css/libs/google-fonts.css">
+      <!-- plugin Selectize: hybrid of a textbox and <select> box -->
+      <link rel="stylesheet" href="css/libs/selectize.default.css">
+      <!-- plugin to create tooltips -->
+      <link rel="stylesheet" href="css/libs/tooltipster.bundle.min.css" />
+      <!-- link to project cascade style sheet -->
+      <link rel="stylesheet" href="css/estilos.css">
+  </head>
+
+	<!-- Definir o conteúdo da página -->
+  <body class="applicationContainer">
+
+    <!-- Definir o cabeçalho do jogo -->
+    <header class="applicationHeader">
+      <h1 class="applicationTitle">Alura Typer</h1>
+      <h2 class="applicationDescription">Seja rápido e digite corretamente a frase proposta pelo Alura Typer!!!</h2>
+    </header>
+
+    <main>
+
+        <section>
+        <!-- Definir botões para a aplicação -->
+
+          <ul class="applicationButtons">
+
+            <!-- Definir botão para reiniciar o jogo -->
+            <li>
+              <p class="applicationParagraph2"> Reiniciar </p>
+              <a id="botao-reiniciar" class="btn-floating btn-large waves-effect waves-light red" title="Reiniciar o jogo">
+                  <i class="material-icons">autorenew</i>
+              </a>
+            </li>
+
+            <!-- Definir botão para limpar ou obter placar do servidor -->
+            <li>
+              <p class="applicationParagraph2"> Placar </p>
+              <a id="botao-placar" class="btn-floating btn-large waves-effect waves-light green" title="Carregar placar do servidor">
+                  <i class="material-icons">cloud_download</i>
+              </a>
+            </li>
+
+            <!-- Definir botão para obter nova frase do servidor -->
+            <li>
+              <p class="applicationParagraph2"> Frase </p>
+              <a id="botao-frase-aleatoria" class="btn-floating btn-large waves-effect waves-light blue" title="Carregar frase do servidor">
+                  <i class="material-icons">format_color_text</i>
+              </a>
+            </li>
+
+            <!-- Definir botão para sincronizar dados do placar com o servidor -->
+            <li>
+              <p class="applicationParagraph2"> Sincronizar </p>
+              <a id="botao-sync" class="btn-floating btn-large waves-effect waves-light gray" title="Sincronizado com sucesso">
+                 <i class="material-icons">free_breakfast</i>
+              </a>
+            </li>
+
+            <!-- Definir o número da frase desejada pelo usuário -->
+            <li>
+              <p class="applicationParagraph2"> Frase </p>
+              <input id="botao-frase-usuario" class="applicationInput" type="number" min="0" max="9" value="0" />
+            </li>
+
+            <!-- Definir selector com os nomes dos usuários participantes do jogo -->
+            <li>
+              <p class="applicationParagraph2"> Jogador </p>
+              <div class="select-usuarios">
+                  <select id="usuarios">
+                      <option value="Douglas">Douglas</option>
+                      <option value="Flavio">Flavio</option>
+                      <option value="Nico">Nico</option>
+                  </select>
+              </div>
+            </li>
+          </ul>
+
+        </section>
+
+        <section>
+
+          <!-- Definir indormaçãoes do jogo: quantidade de segundos em contagem regressiva -->
+          <ul class="applicationChronometer">
+
+            <li><i class="medium material-icons icones">alarm</i></li>
+            <li><p class="applicationCounters">Contagem regressiva</p></li>
+
+            <li>
+              <span id="tempo-digitacao" class="applicationCounters">10</span>
+              <p class="applicationCounters">segundos</p>
+            </li>
+
+            <li><i class="medium material-icons icones">alarm</i></li>
+
+          </ul>
+
+        </section>
+
+        <section>
+
+          <!-- Definir imagem GIF para indicar para usuário que aplicativo está processando algo -->
+          <!-- Definir mensagem de erro para ser utiliza pelo aplicativo -->
+          <div class="applicationMessager">
+              <img src="img/spinner.gif" alt="Spinner" id="spinner">
+              <p id="erro">Ocorreu um erro, por favor tente novamente</p>
+          </div>
+
+        </section>
+
+        <section>
+
+          <ul class="applicationData">
+
+            <li>
+
+              <p class="applicationParagraph">Frase proposta</p>
+
+              <!-- Definir indormaçãoes do jogo: quantidade de palavras a serem digitadas pelo usuário -->
+              <ul class="aplicationNumbers">
+                  <li>
+                      <i class="small material-icons icones">info</i>
+                      <p class="applicationCounters"> Caracteres:</p> <span id="contador-caracteres-aplicacao" class="applicationCounters">YY</span>
+                  </li>
+                  <li>
+                      <i class="small material-icons icones">add_circle</i>
+                      <p class="applicationCounters"> Palavras:</p><span id="contador-palavras-aplicacao" class="applicationCounters">YY</span>
+                  </li>
+              </ul>
+
+              <!-- Definir a frase proposta pelo aplicativo para usuário reproduzir -->
+              <textarea class="applicationPhrase" rows="8" cols ="40">Frase de teste</textarea>
+
+            </li>
+
+            <li>
+
+              <p class="applicationParagraph">Digite a frase proposta</p>
+
+              <!-- Definir contador de caracteres e palavras digitados pelo usuário -->
+              <ul class="aplicationNumbers">
+                  <li>
+                      <i class="small material-icons icones">info</i>
+                      <p class="applicationCounters"> Caracteres:</p> <span id="contador-caracteres-usuario" class="applicationCounters">YY</span>
+                  </li>
+                  <li>
+                      <i class="small material-icons icones">add_circle</i>
+                      <p class="applicationCounters"> Palavras:</p><span id="contador-palavras-usuario" class="applicationCounters">YY</span>
+                  </li>
+              </ul>
+
+              <!-- Definir área para receber a digitação do usuário que tenta reproduzir a frase proposta -->
+              <textarea class="userPhrase" rows="8" cols ="40"></textarea>
+
+            </li>
+
+            <li>
+
+              <!-- Definir o placar do jogo -->
+              <section class="placar">
+
+                  <p class="applicationParagraph">Placar</p>
+
+                    <table class="centered bordered">
+
+                        <thead>
+
+                            <tr>
+                                <th class="applicationParagraph">Nome</th>
+                                <th class="applicationParagraph">Palavras</th>
+                                <th class="applicationParagraph">Remover</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+
+                    </table>
+
+              </section>
+
+            </li>
+          </ul>
+
+        </section>
+
+    </main>
+
+    <!-- Carregar os javaScript utilizados pelo HTML -->
+    <script type="text/javascript" src="javaScriptExterno/jquery.js"></script>
+    <script type="text/javascript" src="javaScriptExterno/materialize.min.js"></script>
+    <script type="text/javascript" src="javaScriptExterno/selectize.js"></script>
+    <script type="text/javascript" src="javaScriptExterno/tooltipster.bundle.min.js"></script>
+
+    <script type="text/javascript" src="javaScriptInterno/frase.js"></script>
+    <script type="text/javascript" src="javaScriptInterno/main.js"></script>
+    <script type="text/javascript" src="javaScriptInterno/placar.js"></script>
+
+  </body>
+
+</html>

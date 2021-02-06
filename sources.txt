@@ -1,0 +1,8 @@
+1. Get gifs
+https://giphy.com/
+
+2. Get jquery
+https://jquery.com/
+
+3. Get icons
+https://materializecss.com/
